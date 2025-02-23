@@ -1,1 +1,23 @@
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Verteniasty/Pets-Go/refs/heads/main/PetsGo.lua"))()
+local ids = {
+	[18901165922] = "PETSGO",
+	[8737899170] = "PETSIM99",
+	[16498369169] = "PETSIM99",
+	[17503543197] = "PETSIM99"
+}
+
+local currentgame = ids[game.PlaceId] or nil
+local executorlevel = getthreadidentity() or getthreadcontext() or 0
+
+if currentgame then
+	if currentgame == "PETSGO" then
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/Verteniasty/Pets-Go/refs/heads/main/PetsGo.lua"))()
+	elseif currentgame == "PETSIM99" then
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/Verteniasty/Pets-Go/refs/heads/main/PS99.lua"))()
+	end
+else
+	warn("GAME NOT SUPPORTED")
+end
+
+if executorlevel < 4 then
+	warn("EXECUTOR NOT SUPPORTED")
+end
