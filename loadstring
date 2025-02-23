@@ -20,5 +20,5 @@ if currentgame then
 		loadstring(game:HttpGet("https://raw.githubusercontent.com/Verteniasty/Pet-rbx/refs/heads/main/PS99.lua"))()
 	end
 else
-	warn("GAME NOT SUPPORTED")
+	warn("GAME/PLACE NOT SUPPORTED")
 end
