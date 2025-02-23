@@ -8,6 +8,11 @@ local ids = {
 local currentgame = ids[game.PlaceId] or nil
 local executorlevel = getthreadidentity() or getthreadcontext() or 0
 
+if executorlevel < 4 then
+	warn("EXECUTOR NOT SUPPORTED")
+	return
+end
+
 if currentgame then
 	if currentgame == "PETSGO" then
 		loadstring(game:HttpGet("https://raw.githubusercontent.com/Verteniasty/Pets-Go/refs/heads/main/PetsGo.lua"))()
@@ -16,8 +21,4 @@ if currentgame then
 	end
 else
 	warn("GAME NOT SUPPORTED")
-end
-
-if executorlevel < 4 then
-	warn("EXECUTOR NOT SUPPORTED")
 end
