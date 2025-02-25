@@ -100,6 +100,7 @@ function makequest(quest, progress, amount)
 		local petinv = save.Inventory.Pet
 		local namount = amount - progress
 		local convertamount = namount + 1
+		local goldenconvert = (namount * 10) + 1 
 		local finalamount = namount * 11
 
 		local besteggmodule = nil
@@ -116,19 +117,41 @@ function makequest(quest, progress, amount)
 			table.insert(besteggpets, v[1])
 		end
 
+		local petfound = false
+
 		for UID, pet in pairs(petinv) do
 			local petamount = pet._am or 1
 			local petrarity = pet.pt or 0
-			print(pet.id, petamount, petrarity)
-			if table.find(besteggpets, pet.id) and pet.pt == 1 and petamount >= finalamount * 11 then
+			--print(pet.id, petamount, petrarity)
+			if table.find(besteggpets, pet.id) and petrarity == 1 and petamount >= finalamount * 11 then
+				petfound = true
 				print("Found pet:", pet.id, petamount, finalamount)
 				local args = {
 					[1] = UID,
 					[2] = convertamount
 				}
-				getgenv().VRT.Lib.Network.Invoke("GoldMachine_Activate", unpack(args))
+				getgenv().VRT.Lib.Network.Invoke("RainbowMachine_Activate", unpack(args))
 				print("Should Convert")
 				break
+			end
+		end
+		if not petfound then
+			print("Trying to get Normal Pets")
+			for UID, pet in pairs(petinv) do
+				local petamount = pet._am or 1
+				local petrarity = pet.pt or 0
+				--print(pet.id, petamount, petrarity)
+				if table.find(besteggpets, pet.id) and petrarity == 0 and petamount >= finalamount * 11 then
+					petfound = true
+					print("Found pet:", pet.id, petamount, finalamount)
+					local args = {
+						[1] = UID,
+						[2] = goldenconvert
+					}
+					getgenv().VRT.Lib.Network.Invoke("GoldMachine_Activate", unpack(args))
+					print("Should Convert Golden")
+					break
+				end
 			end
 		end
 	end
